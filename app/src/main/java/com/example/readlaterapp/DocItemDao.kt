@@ -14,6 +14,6 @@ interface DocItemDao {
     @Delete
     suspend fun delete(doc: DocItem)
 
-    @Query("SELECT * from DocItem ORDER BY id ASC")
+    @Query("SELECT * FROM DocItem ORDER BY id ASC")
     fun getDoc() : Flow<List<DocItem>>
 }
