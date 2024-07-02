@@ -2,11 +2,12 @@ package com.example.readlaterapp
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.parse
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,11 +16,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val database = DocDatabase.getDatabase(applicationContext)
-        repository = DocItemRepository(database.docItemDao())
-
-        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -67,5 +63,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun getFilePathFromUri(uri: Uri): String {
         return uri.path ?: ""
+    }
+
+    private fun ItemClick(docItem: DocItem){
+        if(docItem.filepath.startsWith("http:") or docItem.filepath.startsWith("https:")){
+            val url = docItem.filepath
+            val i = Intent(Intent.ACTION_VIEW)
+            i.setData(Uri.parse(url))
+            startActivity(i)
+        }
+        else{
+            val uri = Uri.parse(docItem.filepath)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.setDataAndType(uri, "application/pdf")
+            startActivity(i)
+        }
     }
 }

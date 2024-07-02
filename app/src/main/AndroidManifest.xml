@@ -45,7 +45,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:mimeType="application/pdf" />
             </intent-filter>
-
         </activity>
     </application>
 </manifest>
