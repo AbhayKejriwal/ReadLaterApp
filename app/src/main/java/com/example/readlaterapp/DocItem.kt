@@ -11,5 +11,9 @@ data class DocItem(
     @ColumnInfo(name = "Document name")
     val name: String,
     @ColumnInfo(name = "filepath")
-    val filepath: String
+    val filepath: String,
+    @ColumnInfo(name = "Like")
+    val like : Boolean = false,
+    @ColumnInfo(name = "Archived")
+    val archived: Boolean = false
 )

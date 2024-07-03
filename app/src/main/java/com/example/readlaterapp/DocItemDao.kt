@@ -9,11 +9,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DocItemDao {
     @Insert
-    suspend fun insert(Doc : DocItem)
+    suspend fun insert(doc: DocItem)
 
     @Delete
     suspend fun delete(doc: DocItem)
 
-    @Query("SELECT * FROM DocItem ORDER BY id ASC")
-    fun getDoc() : Flow<List<DocItem>>
+    @Query("SELECT * FROM DocItem WHERE archived = 0 ORDER BY id ASC")
+    fun getDoc(): Flow<List<DocItem>>
+
+    @Query("SELECT * FROM DocItem WHERE archived = 1 ORDER BY id ASC")
+    fun getArchivedDocs(): Flow<List<DocItem>>
 }
