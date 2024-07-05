@@ -5,17 +5,34 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.parse
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: DocItemRepository
+    private lateinit var docViewModel: DocItemViewModel
+    private lateinit var adapter: ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize repository and ViewModel
+        repository = DocItemRepository(DocDatabase.getDatabase(this).docItemDao())
+        docViewModel = ViewModelProvider(this).get(DocItemViewModel::class.java)
+
+        // Initialize RecyclerView and Adapter
+        adapter = ItemAdapter(this::handleItemClick)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Handle incoming intents
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -65,18 +82,19 @@ class MainActivity : AppCompatActivity() {
         return uri.path ?: ""
     }
 
-    private fun ItemClick(docItem: DocItem){
-        if(docItem.filepath.startsWith("http:") or docItem.filepath.startsWith("https:")){
+    private fun handleItemClick(docItem: DocItem) {
+        if (docItem.filepath.startsWith("http:") || docItem.filepath.startsWith("https:")) {
+            // Open web link
             val url = docItem.filepath
-            val i = Intent(Intent.ACTION_VIEW)
-            i.setData(Uri.parse(url))
-            startActivity(i)
-        }
-        else{
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        } else {
+            // Open PDF document
             val uri = Uri.parse(docItem.filepath)
-            val i = Intent(Intent.ACTION_VIEW)
-            i.setDataAndType(uri, "application/pdf")
-            startActivity(i)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(uri, "application/pdf")
+            startActivity(intent)
         }
     }
 }
