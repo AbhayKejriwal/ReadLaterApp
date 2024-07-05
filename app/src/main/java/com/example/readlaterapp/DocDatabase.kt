@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [DocItem::class], version = 1, exportSchema = false)
 abstract class DocDatabase : RoomDatabase() {
+
     abstract fun docItemDao(): DocItemDao
 
     companion object {
@@ -19,7 +20,9 @@ abstract class DocDatabase : RoomDatabase() {
                     context.applicationContext,
                     DocDatabase::class.java,
                     "doc_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
