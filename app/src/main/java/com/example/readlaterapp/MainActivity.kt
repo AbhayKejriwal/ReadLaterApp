@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: DocItemRepository
     private lateinit var docViewModel: DocItemViewModel
-    private lateinit var adapter: ItemAdapter
+    private lateinit var adapter: DocItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,10 @@ class MainActivity : AppCompatActivity() {
         docViewModel = ViewModelProvider(this).get(DocItemViewModel::class.java)
 
         // Initialize RecyclerView and Adapter
-        adapter = ItemAdapter(this::handleItemClick)
+        adapter = DocItemAdapter { docItem ->
+            // Handle item click
+            handleItemClick(docItem)
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -47,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                     val url = incomingIntent.getStringExtra(Intent.EXTRA_TEXT)
                     if (url != null) {
                         val docItem = DocItem(name = "Web Link", filepath = url)
-                        Log.d("MainActivity", "Handling web link: $url")
                         insertDocItem(docItem)
                     } else {
                         Log.e("MainActivity", "No URL found in intent")
@@ -58,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     if (uri != null) {
                         val pdfPath = getFilePathFromUri(uri)
                         val docItem = DocItem(name = "PDF Document", filepath = pdfPath)
-                        Log.d("MainActivity", "Handling PDF: $pdfPath")
                         insertDocItem(docItem)
                     } else {
                         Log.e("MainActivity", "No PDF URI found in intent")
@@ -74,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     private fun insertDocItem(docItem: DocItem) {
         lifecycleScope.launch {
             repository.insert(docItem)
-            Log.d("MainActivity", "Inserted DocItem: ${docItem.filepath}")
         }
     }
 
