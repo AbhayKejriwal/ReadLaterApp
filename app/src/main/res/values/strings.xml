@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ReadLaterApp</string>
+    <string name="title_text">ReadLater</string>
+    <string name="like_button">Like</string>
+    <string name="archive_button">Archive</string>
+    <string name="settings_button">Settings</string>
+    <string name="title">Title: Read Later</string>
 </resources>
