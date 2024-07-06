@@ -1,10 +1,10 @@
 package com.example.readlaterapp
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DocItemDao {
@@ -16,11 +16,11 @@ interface DocItemDao {
     suspend fun delete(doc: DocItem)
 
     @Query("SELECT * FROM doc_item ORDER BY id ASC")
-    fun getAllDocs(): Flow<List<DocItem>>
+    fun getAllDocs(): LiveData<List<DocItem>>
 
-    @Query("SELECT * FROM doc_item WHERE is_archived = 1 ORDER BY id ASC")
-    fun getArchivedDocs(): Flow<List<DocItem>>
+    @Query("SELECT * FROM doc_item WHERE is_archived = TRUE ORDER BY id ASC")
+    fun getArchivedDocs(): LiveData<List<DocItem>>
 
-    @Query("SELECT * FROM doc_item WHERE is_liked = 1 ORDER BY id ASC")
-    fun getStarredDocs(): Flow<List<DocItem>>
+    @Query("SELECT * FROM doc_item WHERE is_liked = TRUE ORDER BY id ASC")
+    fun getStarredDocs(): LiveData<List<DocItem>>
 }

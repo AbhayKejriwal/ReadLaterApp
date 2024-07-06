@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize repository and ViewModel
         repository = DocItemRepository(DocDatabase.getDatabase(this).docItemDao())
-        docViewModel = ViewModelProvider(this).get(DocItemViewModel::class.java)
+        docViewModel = ViewModelProvider(this)[DocItemViewModel::class.java]
 
         // Initialize RecyclerView and Adapter
         adapter = DocItemAdapter { docItem ->
@@ -36,9 +35,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Handle incoming intents
-        handleIntent(intent)
-
         // Observe LiveData from ViewModel
         docViewModel.allDocs.observe(this, Observer { docs ->
             docs?.let {
@@ -46,19 +42,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // Example of observing archived documents
-        // Replace with appropriate UI triggers (like button clicks) to switch filters
-        docViewModel.getArchivedDocs().observe(this, Observer { archivedDocs ->
-            // Update adapter with archivedDocs
-            adapter.submitList(archivedDocs)
-        })
-
-        // Example of observing liked (starred) documents
-        // Replace with appropriate UI triggers (like button clicks) to switch filters
-        docViewModel.getStarredDocs().observe(this, Observer { starredDocs ->
-            // Update adapter with starredDocs
-            adapter.submitList(starredDocs)
-        })
+        // Handle incoming intents
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {

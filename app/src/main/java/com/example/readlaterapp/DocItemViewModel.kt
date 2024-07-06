@@ -9,9 +9,9 @@ import androidx.lifecycle.asLiveData
 
 class DocItemViewModel(private val repository: DocItemRepository) : ViewModel() {
 
-    val allDocs: LiveData<List<DocItem>> = repository.allDocs.asLiveData()
-    val archivedDocs: LiveData<List<DocItem>> = repository.archivedDocs.asLiveData()
-    val starredDocs: LiveData<List<DocItem>> = repository.starredDocs.asLiveData()
+    val allDocs: LiveData<List<DocItem>> = repository.allDocs
+//    val archivedDocs: LiveData<List<DocItem>> = repository.archivedDocs
+//    val starredDocs: LiveData<List<DocItem>> = repository.starredDocs
 
     fun insert(docItem: DocItem) {
         viewModelScope.launch {
@@ -26,10 +26,10 @@ class DocItemViewModel(private val repository: DocItemRepository) : ViewModel() 
     }
 
     fun getStarredDocs(): LiveData<List<DocItem>> {
-        return repository.starredDocs.asLiveData()
+        return repository.starredDocs
     }
 
     fun getArchivedDocs(): LiveData<List<DocItem>> {
-        return repository.archivedDocs.asLiveData()
+        return repository.archivedDocs
     }
 }

@@ -19,8 +19,8 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
             android:backgroundTint="#FFFFFF"
-            android:cardElevation="10dp"
             android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,12 +36,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Title for testing"
+
                     android:textColor="#000000"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="Item Title" />
+                    android:contentDescription="@string/item_title" />
 
                 <TextView
                     android:id="@+id/pathOrUrlTextView"
@@ -49,12 +49,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
-                    android:text="url for testing"
+
                     android:textColor="#808080"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-                    android:contentDescription="Item Path or URL" />
+                    android:contentDescription="@string/item_path_or_url" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
