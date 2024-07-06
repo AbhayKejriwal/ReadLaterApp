@@ -1,12 +1,13 @@
 package com.example.readlaterapp
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 class DocItemRepository(private val docItemDao: DocItemDao) {
 
     val allDocs: Flow<List<DocItem>> = docItemDao.getAllDocs()
-    val archivedDocs: Flow<List<DocItem>> = docItemDao.getArchivedDocs()
-    val starredDocs: Flow<List<DocItem>> = docItemDao.getStarredDocs()
+    val archivedDocs: LiveData<List<DocItem>> = docItemDao.getArchivedDocsLiveData()
+    val starredDocs: LiveData<List<DocItem>> = docItemDao.getStarredDocsLiveData()
 
     suspend fun insert(docItem: DocItem) {
         docItemDao.insert(docItem)
@@ -17,6 +18,6 @@ class DocItemRepository(private val docItemDao: DocItemDao) {
     }
 
     suspend fun update(docItem: DocItem) {
-        docItemDao.insert(docItem) // Room handles update since primary key is auto-generated
+        docItemDao.update(docItem)
     }
 }

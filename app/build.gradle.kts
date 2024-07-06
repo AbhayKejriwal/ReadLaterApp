@@ -71,4 +71,8 @@ dependencies {
     // DataBinding
     implementation(libs.androidx.databinding.runtime)
 
+    //cardview
+    implementation("com.google.android.material:material:1.x.x")
+
+
 }
