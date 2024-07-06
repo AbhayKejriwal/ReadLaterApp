@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +38,27 @@ class MainActivity : AppCompatActivity() {
 
         // Handle incoming intents
         handleIntent(intent)
+
+        // Observe LiveData from ViewModel
+        docViewModel.allDocs.observe(this, Observer { docs ->
+            docs?.let {
+                adapter.submitList(it)
+            }
+        })
+
+        // Example of observing archived documents
+        // Replace with appropriate UI triggers (like button clicks) to switch filters
+        docViewModel.getArchivedDocs().observe(this, Observer { archivedDocs ->
+            // Update adapter with archivedDocs
+            adapter.submitList(archivedDocs)
+        })
+
+        // Example of observing liked (starred) documents
+        // Replace with appropriate UI triggers (like button clicks) to switch filters
+        docViewModel.getStarredDocs().observe(this, Observer { starredDocs ->
+            // Update adapter with starredDocs
+            adapter.submitList(starredDocs)
+        })
     }
 
     override fun onNewIntent(intent: Intent) {
