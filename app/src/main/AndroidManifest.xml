@@ -48,5 +48,11 @@
                 <data android:mimeType="application/pdf" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="ArchiveActivity"
+            android:exported = "true">
+        </activity>
+
     </application>
 </manifest>

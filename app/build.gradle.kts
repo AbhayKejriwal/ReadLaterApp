@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.constraintlayout)
     implementation(libs.google.material)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,6 +74,5 @@ dependencies {
 
     //cardview
     implementation("com.google.android.material:material:1.x.x")
-
-
+    implementation(kotlin("script-runtime"))
 }

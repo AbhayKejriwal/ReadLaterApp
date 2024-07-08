@@ -1,16 +1,18 @@
 package com.example.readlaterapp
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
+import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
             // Handle item click
             handleItemClick(docItem)
         }
+
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -44,6 +48,11 @@ class MainActivity : AppCompatActivity() {
 
         // Handle incoming intents
         handleIntent(intent)
+
+        val archivebtn : ImageButton = findViewById(R.id.ArchiveButton)
+        archivebtn.setOnClickListener {
+            startActivity(Intent(this@MainActivity, ArchiveActivity::class.java))
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
