@@ -11,7 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -20,8 +22,6 @@
             android:layout_marginVertical="5dp"
             android:backgroundTint="#FFFFFF"
             app:cardElevation="10dp"
-            android:clickable="true"
-            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
