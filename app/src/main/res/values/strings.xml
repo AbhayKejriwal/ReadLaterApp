@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ReadLaterApp</string>
     <string name="todo">TODO</string>
+    <string name="readlater">ReadLater</string>
 </resources>
