@@ -7,4 +7,6 @@
     <string name="title">Title: Read Later</string>
     <string name="item_title">Item Title</string>
     <string name="item_path_or_url">Item Path or URL</string>
+    <string name="archive_title">Title: Archive</string>
+    <string name="archive_title_text">Archive</string>
 </resources>
