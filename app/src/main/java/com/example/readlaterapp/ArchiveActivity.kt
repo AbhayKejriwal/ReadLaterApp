@@ -7,8 +7,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import java.io.File
 
 class ArchiveActivity : AppCompatActivity() {
@@ -21,15 +23,30 @@ class ArchiveActivity : AppCompatActivity() {
         setContentView(R.layout.activity_archive)
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        archiveAdapter = ArchiveAdapter { docItem ->
-            handleItemClick(docItem)
-        }
+        archiveAdapter = ArchiveAdapter(
+            onItemClick = { docItem -> handleItemClick(docItem) },
+            onArchiveClick = { docItem -> unarchiveItem(docItem) },
+            onDeleteClick = { docItem -> deleteItem(docItem) }
+        )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = archiveAdapter
 
         docItemViewModel.archivedDocs.observe(this, Observer { archivedDocs ->
             archiveAdapter.submitList(archivedDocs)
         })
+    }
+
+    private fun unarchiveItem(docItem: DocItem) {
+        docItem.archived = false
+        lifecycleScope.launch {
+            docItemViewModel.update(docItem)
+        }
+    }
+
+    private fun deleteItem(docItem: DocItem) {
+        lifecycleScope.launch {
+            docItemViewModel.delete(docItem)
+        }
     }
 
     private fun handleItemClick(docItem: DocItem) {
@@ -43,7 +60,7 @@ class ArchiveActivity : AppCompatActivity() {
         } else {
             // Open PDF document
             val uri = Uri.parse(docItem.filepath)
-            val file = File(uri.path)
+            val file = File(uri.path ?: "")
             val pdfUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(pdfUri, "application/pdf")

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.readlaterapp.databinding.ItemViewBinding
 
-class DocItemAdapter(private val onItemClick: (DocItem) -> Unit,    private val onArchiveClick: (DocItem) -> Unit, private val onDeleteClick: (DocItem) -> Unit
+class DocItemAdapter(private val onItemClick: (DocItem) -> Unit, private val onArchiveClick: (DocItem) -> Unit, private val onDeleteClick: (DocItem) -> Unit
 ) :
     ListAdapter<DocItem, DocItemAdapter.DocItemViewHolder>(DocItemDiffCallback()) {
 

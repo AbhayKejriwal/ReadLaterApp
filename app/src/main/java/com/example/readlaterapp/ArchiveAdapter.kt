@@ -1,12 +1,12 @@
 package com.example.readlaterapp
 
-import  android.view.LayoutInflater
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.readlaterapp.databinding.ItemViewBinding
 
-class ArchiveAdapter(private val onItemClick: (DocItem) -> Unit) :
-    RecyclerView.Adapter<ArchiveAdapter.ArchiveViewHolder>() {
+class ArchiveAdapter(private val onItemClick: (DocItem) -> Unit, private val onArchiveClick: (DocItem) -> Unit, private val onDeleteClick: (DocItem) -> Unit
+) : RecyclerView.Adapter<ArchiveAdapter.ArchiveViewHolder>() {
 
     private var archivedDocs: List<DocItem> = emptyList()
 
@@ -38,6 +38,20 @@ class ArchiveAdapter(private val onItemClick: (DocItem) -> Unit) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = archivedDocs[position]
                     onItemClick(item)
+                }
+            }
+            binding.imageButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = archivedDocs[position]
+                    onArchiveClick(item)
+                }
+            }
+            binding.imageButton2.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = archivedDocs[position]
+                    onDeleteClick(item)
                 }
             }
         }
