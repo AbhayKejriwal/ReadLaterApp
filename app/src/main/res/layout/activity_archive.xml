@@ -17,6 +17,7 @@
         android:contentDescription="@string/archive_title"
         android:text="@string/archive_title_text"
         android:textSize="35sp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
