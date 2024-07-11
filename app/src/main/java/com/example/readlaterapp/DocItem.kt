@@ -13,7 +13,7 @@ data class DocItem(
     @ColumnInfo(name = "file_path")
     val filepath: String,
     @ColumnInfo(name = "is_liked")
-    val like: Boolean = false,
+    var like: Boolean = false,
     @ColumnInfo(name = "is_archived")
-    val archived: Boolean = false
+    var archived: Boolean = false
 )

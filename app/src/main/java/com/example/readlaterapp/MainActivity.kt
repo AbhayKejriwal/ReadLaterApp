@@ -1,26 +1,20 @@
 package com.example.readlaterapp
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.launch
 import androidx.core.content.FileProvider
+import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,22 +31,22 @@ class MainActivity : AppCompatActivity() {
         docViewModel = ViewModelProvider(this)[DocItemViewModel::class.java]
 
         // Initialize RecyclerView and Adapter
-        adapter = DocItemAdapter { docItem ->
-            // Handle item click
-            handleItemClick(docItem)
-        }
-
+        adapter = DocItemAdapter(
+            onItemClick = { docItem -> handleItemClick(docItem) },
+            onArchiveClick = { docItem -> archiveItem(docItem) },
+            onDeleteClick = { docItem -> deleteItem(docItem) }
+        )
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Observe LiveData from ViewModel
-        docViewModel.allDocs.observe(this, Observer { docs ->
+        docViewModel.allDocs.observe(this) { docs ->
             docs?.let {
                 adapter.submitList(it)
             }
-        })
+        }
 
         // Handle incoming intents
         handleIntent(intent)
@@ -106,6 +100,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun archiveItem(docItem: DocItem) {
+        docItem.archived = true
+        lifecycleScope.launch {
+            repository.update(docItem)
+        }
+    }
+
+    private fun deleteItem(docItem: DocItem) {
+        lifecycleScope.launch {
+            repository.delete(docItem)
+        }
+    }
 
     private fun getFilePathFromUri(context: Context, uri: Uri): String? {
         var filePath: String? = null

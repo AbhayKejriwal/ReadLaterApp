@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.readlaterapp.databinding.ItemViewBinding
 
-class DocItemAdapter(private val onItemClick: (DocItem) -> Unit) :
+class DocItemAdapter(private val onItemClick: (DocItem) -> Unit,    private val onArchiveClick: (DocItem) -> Unit, private val onDeleteClick: (DocItem) -> Unit
+) :
     ListAdapter<DocItem, DocItemAdapter.DocItemViewHolder>(DocItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocItemViewHolder {
@@ -29,6 +30,20 @@ class DocItemAdapter(private val onItemClick: (DocItem) -> Unit) :
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     onItemClick(item)
+                }
+            }
+            binding.imageButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    onArchiveClick(item)
+                }
+            }
+            binding.imageButton2.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    onDeleteClick(item)
                 }
             }
         }
