@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insertDocItem(docItem: DocItem) {
+        Log.i("MainActivity","Inserting Item")
         lifecycleScope.launch {
             repository.insert(docItem)
         }
@@ -102,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun archiveItem(docItem: DocItem) {
         docItem.archived = true
+        Log.i("MainActivity","Adding to archive")
         lifecycleScope.launch {
             repository.update(docItem)
         }
@@ -109,6 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun deleteItem(docItem: DocItem) {
         lifecycleScope.launch {
+            Log.i("MainActivity","deleting item")
             repository.delete(docItem)
         }
     }

@@ -3,6 +3,7 @@ package com.example.readlaterapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -38,12 +39,14 @@ class ArchiveActivity : AppCompatActivity() {
 
     private fun unarchiveItem(docItem: DocItem) {
         docItem.archived = false
+        Log.i("ArchiveActivity","Removing from archive")
         lifecycleScope.launch {
             docItemViewModel.update(docItem)
         }
     }
 
     private fun deleteItem(docItem: DocItem) {
+        Log.i("ArchiveActivity","deleting item")
         lifecycleScope.launch {
             docItemViewModel.delete(docItem)
         }
