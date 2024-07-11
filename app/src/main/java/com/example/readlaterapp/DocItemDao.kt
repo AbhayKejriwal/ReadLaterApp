@@ -20,7 +20,7 @@ interface DocItemDao {
     @Update
     suspend fun update(doc: DocItem)
 
-    @Query("SELECT * FROM doc_item ORDER BY id ASC")
+    @Query("SELECT * FROM doc_item WHERE is_archived = 0 ORDER BY id ASC")
     fun getAllDocs(): Flow<List<DocItem>>
 
     @Query("SELECT * FROM doc_item WHERE is_archived = 1 ORDER BY id ASC")
