@@ -2,6 +2,8 @@
 
 ReadLater is an Android application that allows users to save web links and PDF files for later viewing. It provides a convenient way to manage and access saved content directly from your mobile device.
 
+App UI sample and screenshots: https://docs.google.com/document/d/1h2sLuWBuAn8XaMIbX5B2GARV7kylIR1d_SfKk9adFXg/
+
 ## Features
 
 - Save web links and PDF file locations shared from other apps
